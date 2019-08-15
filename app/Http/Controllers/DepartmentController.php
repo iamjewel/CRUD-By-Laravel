@@ -14,7 +14,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+
+        $departments = Department::latest()->paginate(5);
+
+        return view('admin.department.index', ['departments' => $departments]);
     }
 
     /**
@@ -51,7 +54,7 @@ class DepartmentController extends Controller
 
 
         return redirect()->route('department.create')
-            ->with(['message' => 'Department Save Successfully']);
+            ->with(['message' => 'Department Saved Successfully']);
     }
 
     /**

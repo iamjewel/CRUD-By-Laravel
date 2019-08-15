@@ -12,7 +12,7 @@
         <div class="card-header row">
             <h1 class="card-title text-center col-8" style="margin-left: 130px">Add Department</h1>
 
-            <a class="btn btn-success" href="{{route('department.create')}}" style="margin-top:-5px;margin-left: 31px">Manage
+            <a class="btn btn-success" href="{{route('department.index')}}" style="margin-top:-5px;margin-left: 31px">Manage
                 Department</a>
         </div>
 
