@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->integer('department_id');
-            $table->string('semester');
+            $table->string('semester_id');
             $table->text('address');
             $table->timestamps();
         });
