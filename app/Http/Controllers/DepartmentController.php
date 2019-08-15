@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -26,21 +27,37 @@ class DepartmentController extends Controller
         return view('admin.department.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //Add Department Function
     public function store(Request $request)
     {
+        $this->validate($request, [
 
+            'department_name' => 'required|unique:departments',
+            'department_code' => 'required|unique:departments',
+            'department_routine' => 'required',
+
+        ]);
+
+
+        $fileName = time() . '.' . request()->department_routine->getClientOriginalExtension();
+        $fileUrl = request()->department_routine->move(('routines'), $fileName);
+
+        $department = new Department();
+
+        $department->department_name = $request->department_name;
+        $department->department_code = $request->department_code;
+        $department->department_routine = $fileUrl;
+        $department->save();
+
+
+        return redirect()->route('department.create')
+            ->with(['message' => 'Department Save Successfully']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,7 +68,7 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,8 +79,8 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +91,7 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
