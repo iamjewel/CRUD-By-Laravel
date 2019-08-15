@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Semester::class, function (Faker $faker) {
     return [
-        //
+        'semester_name' =>$faker->name
     ];
 });
