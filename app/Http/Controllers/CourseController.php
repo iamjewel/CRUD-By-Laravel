@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Department;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -14,7 +15,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.course.index',
+            ['courses' => Course::with('department')
+                ->latest()->paginate(5)]);
     }
 
     /**
@@ -24,7 +27,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.course.create', ['departments' => Department::all()]);
     }
 
     /**
@@ -35,16 +38,27 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+
+            'department_id' => 'required',
+            'course_name' => 'required|unique:courses',
+
+        ]);
+
+        Course::create($request->all());
+
+        return redirect()->route('course.create')
+            ->with(['message' => 'Course Info Saved Successfully']);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($id)
     {
         //
     }
@@ -52,34 +66,58 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit($id)
     {
-        //
+        return view('admin.course.edit',
+            ['course'=>Course::with('department')
+                ->find($id),'departments' => Department::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id)
     {
-        //
+        $course = Course::find($id);
+
+        $this->validate($request, [
+
+            'department_id' => 'required',
+            'course_name' => 'required|unique:courses,course_name,'.$course->id,
+
+        ]);
+
+
+        $course->update($request->all());
+
+        return redirect()->route('course.index')
+            ->with(['message' => 'Course Info Updated Successfully']);
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Course  $course
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        //
+
+        $course = Course::findOrFail($id);
+
+        $course->delete();
+
+        return redirect()->route('course.index')
+            ->with(['message' => 'Course Info Deleted Successfully']);
+
     }
 }
