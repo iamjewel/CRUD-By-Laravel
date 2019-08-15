@@ -51,7 +51,7 @@
 
                             <div class="row">
                                 <div class="col-sm-8" style="margin-top: 3px">
-                                    <a href="{{route('department.show',['department'=>$department->id])}}"
+                                    <a href="{{route('department.edit',['department'=>$department->id])}}"
                                        class="fa fa-edit" style="margin-right: 5px"></a>
                                 </div>
 

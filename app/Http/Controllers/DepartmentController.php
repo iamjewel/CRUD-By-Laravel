@@ -76,7 +76,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.department.edit',
+            ['department' => Department::find($id)]);
     }
 
     /**
@@ -84,21 +85,55 @@ class DepartmentController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function update(Request $request, $id)
     {
-        //
+        $department = Department::find($id);
+
+        $this->validate($request, [
+
+            'department_name' => 'required|unique:departments,department_name,' . $department->id,
+            'department_code' => 'required|unique:departments,department_code,' . $department->id,
+
+        ]);
+
+        if ($request->department_routine) {
+            $fileName = time() . '.' . request()->department_routine->getClientOriginalExtension();
+            $fileUrl = request()->department_routine->move(('routines'), $fileName);
+
+            unlink($department->department_routine);
+
+            $department->department_name = $request->department_name;
+            $department->department_code = $request->department_code;
+            $department->department_routine = $fileUrl;
+            $department->update();
+
+            return redirect('/department/create')
+                ->with(['message' => 'Department Update Successfully']);
+
+        } else if (!$request->department_routine) {
+
+            $department->department_name = $request->department_name;
+            $department->department_code = $request->department_code;
+            $department->update();
+
+            return redirect()->route('department.index')
+                ->with(['message' => 'Department Update Successfully']);
+
+        }
+        return 'Successful';
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+        $department = Department::findOrFail($id);
+        unlink($department->department_routine);
+        $department->delete();
+
+        return redirect()->route('department.index')
+            ->with(['message' => 'Department Deleted Successfully']);
+
     }
 }
