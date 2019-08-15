@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
+use App\Student;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +27,11 @@ class HomeController extends Controller
     {
 //        return view('admin.app');
 
-        return view('admin.home.home');
+        $studentCount = Student::count();
+        $departmentCount = Department::count();
+
+        return view('admin.home.home', ['studentCount'=>$studentCount, 'departmentCount'=>$departmentCount]);
+
 
 
     }
