@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Manage Student View
     public function index()
     {
 
@@ -22,11 +18,7 @@ class StudentController extends Controller
                 ->latest()->paginate(5)]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Add Student View
     public function create()
     {
 
@@ -34,12 +26,7 @@ class StudentController extends Controller
             ['departments' => Department::all(), 'semesters' => Semester::all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+    //Add Student Function
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -71,23 +58,13 @@ class StudentController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    //Edit Student View
     public function edit($id)
     {
         return view('admin.student.edit',
@@ -141,7 +118,6 @@ class StudentController extends Controller
                 ->with(['message' => 'Student Info Saved Successfully']);
 
         }
-
 
     }
 

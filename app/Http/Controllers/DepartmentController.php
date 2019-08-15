@@ -7,11 +7,7 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Manage Department View
     public function index()
     {
 
@@ -20,11 +16,7 @@ class DepartmentController extends Controller
         return view('admin.department.index', ['departments' => $departments]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Add Department View
     public function create()
     {
         return view('admin.department.create');
@@ -57,36 +49,20 @@ class DepartmentController extends Controller
             ->with(['message' => 'Department Saved Successfully']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    //Edit Department View
     public function edit($id)
     {
         return view('admin.department.edit',
             ['department' => Department::find($id)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return string
-     */
+    //Update Department Function
     public function update(Request $request, $id)
     {
         $department = Department::find($id);
@@ -126,6 +102,7 @@ class DepartmentController extends Controller
     }
 
 
+    //Delete Department Function
     public function destroy($id)
     {
         $department = Department::findOrFail($id);

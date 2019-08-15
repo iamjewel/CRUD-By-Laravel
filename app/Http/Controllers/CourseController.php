@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Manage Course View
     public function index()
     {
         return view('admin.course.index',
@@ -20,22 +16,13 @@ class CourseController extends Controller
                 ->latest()->paginate(5)]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Add Course View
     public function create()
     {
         return view('admin.course.create', ['departments' => Department::all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //Save Course Function
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -52,23 +39,13 @@ class CourseController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Edit Course View
     public function edit($id)
     {
         return view('admin.course.edit',
@@ -76,13 +53,7 @@ class CourseController extends Controller
                 ->find($id),'departments' => Department::all()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Update Course Function
     public function update(Request $request, $id)
     {
         $course = Course::find($id);
@@ -103,12 +74,7 @@ class CourseController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Delete Course Function
     public function destroy($id)
     {
 

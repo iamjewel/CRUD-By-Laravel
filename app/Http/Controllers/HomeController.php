@@ -18,15 +18,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    //Home View
     public function index()
     {
-//        return view('admin.app');
-
         $studentCount = Student::count();
         $departmentCount = Department::count();
 
