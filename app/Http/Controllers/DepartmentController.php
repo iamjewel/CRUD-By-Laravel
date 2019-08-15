@@ -23,7 +23,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.department.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
